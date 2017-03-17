@@ -1,0 +1,75 @@
+sqlite3 sdss.db
+
+CREATE TABLE sources (
+    run         INTEGER,
+    rerun       INTEGER,
+    camcol      INTEGER,
+    field       INTEGER,
+    obj         INTEGER,
+    type        INTEGER,
+    ra          REAL,
+    dec         REAL,
+    psfMag_r    REAL,
+    psfMag_g    REAL,
+    psfMgErr_r  REAL,
+    psfMagErr_g REAL
+);
+
+
+CREATE TABLE runs (
+    run         INTEGER,
+    ra          REAL,
+    dec         REAL,
+    mjdstart    REAL,
+    mjdend      REAL,
+    node        REAL,
+    inclination REAL,
+    mu0    REAL,
+    nu0    REAL
+);
+
+cp runs.txt runs.in
+# edit runs.in to remove the first line (the header)
+
+cp sample.csv sample.txt
+# edit to remove the first line
+
+sqlite> .mode csv
+sqlite> .separator " "
+sqlite> .import runs.in runs
+sqlite> .separator ","
+sqlite> .import sample.txt sources
+sqlite> .quit
+
+GUI: Mention having to right-click, then hit ‘Open’ while holding down the Option key.
+
+SELECT ra, dec, psfMag_r FROM sources
+	- why do we care: if the original table had 500 columns
+SELECT ra, dec, psfMag_r FROM sources WHERE psfMag_r < 21.5
+	- note we could’ve had, say psfMag_g < 21.5
+SELECT ra, dec, psfMag_r FROM sources WHERE psfMag_r < 21.5 LIMIT 5
+	- when developing/debugging query, or looking for top X objects
+	- note that the order is undefined
+SELECT COUNT(psfMag_r), AVG(psfMag_r) FROM sources WHERE psfMag_r < 21.5
+	- Ask them what this does.
+	- Ask them what they should expect here, what average magnitude?
+	- Note the -700 !
+		SELECT psfMag_r FROM sources WHERE psfMag_r < 0
+		- Note that SDSS marks -9999
+		- There’s no standard in astronomy
+	- UPDATE sources SET psfMag_r = NULL WHERE psfMag_r = -9999.0
+		- Re-execute the query
+		- Note the new value
+		- Note that the aggregate functions skip over NULLs
+			- e.g. SELECT COUNT(psfMag_r) FROM sources WHERE psfMag_r is NULL
+			- e.g. SELECT COUNT(*), COUNT(psfMag_r) FROM sources WHERE psfMag_r is NULL
+SELECT COUNT(*), run FROM sources GROUP BY run
+SELECT COUNT(*), run FROM sources GROUP BY run ORDER BY run
+SELECT COUNT(*) as ct , run FROM sources GROUP BY run ORDER BY ct
+
+==========
+
+SELECT
+  sources.ra, sources.dec, sources.run, mjdstart
+FROM
+  sources JOIN runs ON sources.run = runs.run
