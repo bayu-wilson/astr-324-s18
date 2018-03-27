@@ -2,6 +2,8 @@
 # ASTR 324, Spring 2018, University of Washington: 
 # Introduction to AstroStatistics and Big Data in Astronomy
 
+test
+
 [Željko Ivezić](http://www.astro.washington.edu/users/ivezic/) and [Mario Jurić](http://research.majuric.org)
 
 ## Location
