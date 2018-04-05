@@ -41,7 +41,7 @@ from matplotlib import pyplot as plt
 # result in an error if LaTeX is not installed on your system.  In that case,
 # you can set usetex to False.
 from astroML.plotting import setup_text_plots
-setup_text_plots(fontsize=8, usetex=True)
+setup_text_plots(fontsize=15, usetex=True)
 
 #------------------------------------------------------------
 # Define the distribution parameters to be plotted
@@ -52,7 +52,7 @@ x = np.linspace(-1, 20, 1000)
 
 #------------------------------------------------------------
 # plot the distributions
-fig, ax = plt.subplots(figsize=(5, 3.75))
+fig, ax = plt.subplots(figsize=(10, 7))
 fig.subplots_adjust(bottom=0.12)
 
 for k, ls in zip(k_values, linestyles):
