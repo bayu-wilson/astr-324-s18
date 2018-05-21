@@ -20,3 +20,5 @@
  * Lecture 12: [Time Series Analysis. II](Week-6-Thu.ipynb)
  * Lecture 13: [Principal Component Analysis](Week-7-Tue.pdf)
  * Lecture 14: [Regression ](Week-7-Thu.pdf) [(notebook)](Week-7-Thu.ipynb)
+ * Lecture 15: [Density Estimation. I](Week-9-Tue.pdf) [(notebook)](Week-9-Tue.ipynb)
+ * Lecture 16: [Density Estimation. II](Week-9-Thu.pdf) [(notebook)](Week-9-Thu.ipynb)
